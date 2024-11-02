@@ -10,7 +10,7 @@ class ProductController extends Controller
        $products=Product::latest()->paginate(3);
        return view('product',compact('products'));
    }
-
+// product add---------------------
    public function add_product(Request $request) {
       $request->validate(
         [
@@ -34,7 +34,7 @@ class ProductController extends Controller
 
    }
 
-
+// product update----------------
    public function update_product(Request $request) {
     $request->validate(
         [
@@ -54,6 +54,18 @@ class ProductController extends Controller
   return response()->json([
        "status"=>"success",
   ]);
+
+   }
+
+
+
+   // product delete----------------
+
+   public function delete_product(Request $request) {
+     Product::find($request->product_id)->delete();
+     return response()->json([
+        "status"=>"success",
+   ]);
 
    }
 

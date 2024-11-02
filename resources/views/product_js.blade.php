@@ -46,8 +46,7 @@
         $("#up_name").val(name);
         $("#up_price").val(price);
     });
-    // product update
-
+ // update product data
     $(document).on('click','.update_product',function(e){
         e.preventDefault();
         let up_id=$("#up_id").val();
@@ -72,6 +71,27 @@
               })
            }
         })
+       })
+
+       // delete product data
+    $(document).on('click','.delete_product',function(e){
+        e.preventDefault();
+        let product_id=$(this).data('id');
+       // console.log(name+price);
+       if(confirm("Are you sure you want to delete this product?")){
+        //alert(product_id);
+          $.ajax({
+             url:"{{ route('delete.product') }}",
+             method:'post',
+             data:{product_id:product_id},
+             success:function(res){
+                if(res.status=="success"){
+                   $(".table").load(location.href+" .table");
+                }
+             },
+          })
+        }
+
        })
 });
 
