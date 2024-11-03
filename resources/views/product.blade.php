@@ -9,6 +9,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel= "stylesheet" href= "https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css" >
+    <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
     <title>Ajax Crud Operation</title>
   </head>
   <body>
@@ -18,6 +19,7 @@
             <div class="col-lg-8 my-4">
                 <h2 class="text-center pb-2"> Laravel Ajax Crud Operation</h2>
                 <a href="" class="btn btn-success my-3" data-bs-toggle="modal" data-bs-target="#addModal">Add Product</a>
+                <input type="text" class="form-control my-2" name="search" id="search" placeholder="Search Here...">
                 <div class="table-data">
                     <table class="table table-bordered">
                         <thead>

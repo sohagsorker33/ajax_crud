@@ -1,6 +1,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script  src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
+<script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+{!! Toastr::message() !!}
 <script>
     $.ajaxSetup({
   headers: {
@@ -26,6 +27,24 @@
                  $('#addModal').modal('hide');
                  $("#addProduct")[0].reset();
                  $(".table").load(location.href+" .table");
+                 toastr["success"]("product added successfully", "success");
+                   toastr.options = {
+                         "closeButton": false,
+                         "debug": false,
+                         "newestOnTop": false,
+                         "progressBar": false,
+                         "positionClass": "toast-top-right",
+                         "preventDuplicates": false,
+                         "onclick": null,
+                         "showDuration": "300",
+                         "hideDuration": "1000",
+                         "timeOut": "5000",
+                         "extendedTimeOut": "1000",
+                         "showEasing": "swing",
+                         "hideEasing": "linear",
+                         "showMethod": "fadeIn",
+                          "hideMethod": "fadeOut"
+                }
               }
            },error:function(err){
               let error=err.responseJSON;
@@ -63,6 +82,24 @@
                  $('#updateModal').modal('hide');
                  $("#updateProduct")[0].reset();
                  $(".table").load(location.href+" .table");
+                 toastr["success"]("product updated successfully", "success");
+                   toastr.options = {
+                         "closeButton": false,
+                         "debug": false,
+                         "newestOnTop": false,
+                         "progressBar": false,
+                         "positionClass": "toast-top-right",
+                         "preventDuplicates": false,
+                         "onclick": null,
+                         "showDuration": "300",
+                         "hideDuration": "1000",
+                         "timeOut": "5000",
+                         "extendedTimeOut": "1000",
+                         "showEasing": "swing",
+                         "hideEasing": "linear",
+                         "showMethod": "fadeIn",
+                          "hideMethod": "fadeOut"
+                }
               }
            },error:function(err){
               let error=err.responseJSON;
@@ -87,12 +124,61 @@
              success:function(res){
                 if(res.status=="success"){
                    $(".table").load(location.href+" .table");
+           // toster success alert
+                   toastr["success"]("product deleted successfully", "success");
+                   toastr.options = {
+                   "closeButton": false,
+                   "debug": false,
+                   "newestOnTop": false,
+                   "progressBar": false,
+                   "positionClass": "toast-top-right",
+                   "preventDuplicates": false,
+                   "onclick": null,
+                   "showDuration": "300",
+                   "hideDuration": "1000",
+                   "timeOut": "5000",
+                   "extendedTimeOut": "1000",
+                   "showEasing": "swing",
+                   "hideEasing": "linear",
+                   "showMethod": "fadeIn",
+                   "hideMethod": "fadeOut"
+                  }
                 }
              },
           })
+       }
+     })
+   $(document).on("click",".pagination a",function(e){
+     e.preventDefault();
+      let page=$(this).attr('href').split('page=')[1];
+     product(page)
+   })
+   function product(page){
+    $.ajax({
+        url:" /pagination-data?page="+page,
+        success:function(res){
+            $('.table-data').html(res);
         }
+    })
+   }
+   // search product
+ $(document).on('keyup',function(e){
+   e.preventDefault();
+   let search_string=$('#search').val();
+  // console.log(search_string);
+  $.ajax({
+    url:"{{ route('search.product') }}",
+    method:"post",
+    data:{search_string:search_string},
+    success:function(res){
+      $('.table-data').html(res);
+      if(res.status=="Nothing Found"){
+          $('.table-data').html('<span class="text-danger">'+'Nothing Found'+'</span>')
+      }
+    }
+  });
+ })
 
-       })
 });
 
 
